@@ -1,6 +1,5 @@
 public class Principaliguals {
     public static void main(String[] args) throws Exception {
-        System.out.println("Acaba thread main");
 
         Fil juan = new Fil("Juan");
         Fil pepe = new Fil("Pepe");
@@ -10,6 +9,8 @@ public class Principaliguals {
 
         pepe.start();
         juan.start();
+
+        System.out.println("Acaba thread main");
 
     }
 }
