@@ -1,5 +1,6 @@
 public class PrincipalDiferents {
     public static void main(String[] args) throws Exception {
+        System.out.println("Acaba thread main");
 
         Fil pepe = new Fil("Pepe");
         Fil juan = new Fil("Juan");
@@ -10,6 +11,5 @@ public class PrincipalDiferents {
         pepe.start();
         juan.start();
 
-        System.out.println("Acaba thread main");
     }
 }

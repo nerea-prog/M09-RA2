@@ -1,25 +1,20 @@
 public class Fil extends Thread {
-    private String nom;
+    private int repeticions;
 
     public Fil(String nom){
-        this.nom = nom;
+        super(nom);
     }
 
     @Override
     public void run(){
-        for (int i = 1; i <= 9; i++) {
-            System.out.println(nom + " " + i);
+        for (int i = 1; i <= repeticions; i++) {
+            System.out.println(getName() + " " + i);
 
-            try{
-                Thread.sleep(1);
-            } catch (Exception e){
-                System.out.println(e);
-            }
             for (int j = 0; j < 1000; j++) {
                 
             }
         }
-        System.out.println("Acaba el fil " + nom);
+        System.out.println("Acaba el fil " + getName());
     }
 
 }
