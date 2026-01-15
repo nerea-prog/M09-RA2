@@ -1,5 +1,6 @@
 public class Futbolista extends Thread {
     
+    //Variables
     private int ngols = 0;
     private int ntirades = 0;
     
