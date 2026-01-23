@@ -15,8 +15,9 @@ public class Treballador extends Thread {
         this.SOU_ANUAL_BRUT = sou_anual_brut;
         this.edat_inici_treball = edat_inici_treball;
         this.edat_fi_treball = edat_fi_treball;
-        edat_actual = 0;
-        cobrat = 0.0f;
+        this.edat_actual = 0;
+        this.cobrat = 0.0f;
+        this.rnd = new Random();
     }
     public void cobra(){
         float souMensual = SOU_ANUAL_BRUT / 12;
@@ -32,6 +33,11 @@ public class Treballador extends Thread {
     public void run(){
         for(int i = edat_inici_treball; i < edat_fi_treball; i++){
             for (int j = 1; j <= 12; j++) {
+                try {
+                    int delay = rnd.nextInt(100);
+                    Thread.sleep(delay);
+                } catch (Exception e) {
+                    Thread.currentThread().interrupt();                }
                 cobra();
                 pagaImpostos();
             }
