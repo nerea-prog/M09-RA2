@@ -13,6 +13,7 @@ public class Esdeveniment {
     }
 
     public synchronized void ferReserva(Assistent assistent) throws Exception {
+        
         while (placesDisponibles == 0) {
             wait();
         }
@@ -26,12 +27,12 @@ public class Esdeveniment {
         if (assistents.contains(assistent)) {
             assistents.remove(assistent);
             placesDisponibles++;
-            System.out.println(assistent.getName() + " ha cancel·lat la reserva. Places disponibles: "
+            System.out.println(assistent.getName() + " ha cancel·lat una reserva. Places disponibles: "
                     + placesDisponibles);
             notifyAll();
         } else {
             System.out.println(assistent.getName()
-                    + " no ha pogut fer una reserva inexistent. Places disponibles: " + placesDisponibles);
+                    + " no ha pogut cancel·lar una reserva inexistent. Places disponibles: " + placesDisponibles);
         }
     }
 }
