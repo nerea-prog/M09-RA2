@@ -15,7 +15,7 @@ public class Taula {
         for (int i = 0; i < numeroFilosofs; i++) {
             Forquilla forquillaEsquerra = forquilles[i];
             Forquilla forquillaDreta = forquilles[(i + 1) % numeroFilosofs];
-            filosofs[i] = new Filosof("fil" + i, forquillaDreta, forquillaEsquerra);
+            filosofs[i] = new Filosof(i, forquillaDreta, forquillaEsquerra);
             forquillesEsquerra[i] = forquillaEsquerra;
             forquillesDreta[i] = forquillaDreta;
         }

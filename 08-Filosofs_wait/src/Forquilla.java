@@ -1,11 +1,24 @@
 public class Forquilla {
     private int numeroForquilla;
-    public int propietario;
-    public static int LLIURE = -1;
+    private int propietari;
+    public static final int LLIURE = -1;
 
     public Forquilla(int numeroForquilla) {
         this.numeroForquilla = numeroForquilla;
-        this.propietario = LLIURE;
+        this.propietari = LLIURE;
+    }
+
+    public synchronized boolean agafarAmbTempsLimit(int propietari, long tempsLimitMs) throws InterruptedException {
+        long limit = System.currentTimeMillis() + tempsLimitMs;
+        while (this.propietari != LLIURE) {
+            long restant = limit - System.currentTimeMillis();
+            if (restant <= 0) {
+                return false;
+            }
+            wait(restant);
+        }
+        this.propietari = propietari;
+        return true;
     }
 
     public int getNumeroForquilla() {
@@ -16,24 +29,24 @@ public class Forquilla {
         this.numeroForquilla = numeroForquilla;
     }
 
-    public int getPropietario() {
-        return propietario;
+    public int getPropietari() {
+        return propietari;
     }
 
-    public void setPropietario(int propietario) {
-        this.propietario = propietario;
+    public void setPropietari(int propietari) {
+        this.propietari = propietari;
     }
 
-    public synchronized boolean agafar(int propietario) throws InterruptedException{
-        while (this.propietario != LLIURE){
+    public synchronized boolean agafar(int propietari) throws InterruptedException {
+        while (this.propietari != LLIURE) {
             wait();
         }
-        this.propietario = propietario;
+        this.propietari = propietari;
         return true;
     }
 
-    public synchronized void deixar(){
-        this.propietario = LLIURE;
+    public synchronized void deixar() {
+        this.propietari = LLIURE;
         notifyAll();
     }
 }
