@@ -1,26 +1,23 @@
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Forquilla {
-
-    private int num;
+    private int numeroForquilla;
     private ReentrantLock bloqueig;
 
-    public Forquilla(int num) {
-        this.num = num;
+    public Forquilla(int numeroForquilla) {
+        this.numeroForquilla = numeroForquilla;
         this.bloqueig = new ReentrantLock();
     }
 
-    public int getNum() {
-        return num;
+    public int getNumeroForquilla() {
+        return numeroForquilla;
     }
 
-    public void agafar(String nomFilosof) {
+    public void agafar() {
         bloqueig.lock();
-        System.out.println(nomFilosof + " agafa la forquilla " + num);
     }
 
-    public void deixar(String nomFilosof) {
-        System.out.println(nomFilosof + " deixa la forquilla " + num);
+    public void deixar() {
         bloqueig.unlock();
     }
 }
