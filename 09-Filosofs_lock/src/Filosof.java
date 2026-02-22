@@ -1,53 +1,84 @@
 public class Filosof extends Thread {
     private Forquilla forquillaDreta;
     private Forquilla forquillaEsquerra;
-    private int comptadorGana;
+    private long iniciGana;
+    private long fiGana;
+    private long gana;
 
-    public Filosof(int numComensal, Forquilla forquillaDreta, Forquilla forquillaEsquerra) {
-        super("fil" + numComensal);
+    public Filosof(String nom, Forquilla forquillaDreta, Forquilla forquillaEsquerra) {
+        super(nom);
         this.forquillaDreta = forquillaDreta;
         this.forquillaEsquerra = forquillaEsquerra;
-        comptadorGana = 0;
+        this.iniciGana = 0;
+        this.fiGana = 0;
+        this.gana = 0;
     }
 
-    public void agafarForquillaEsquerra() throws InterruptedException {
-        System.out.println("Filòsof: " + getName() + " agafa la forquilla esquerra " + forquillaEsquerra.getNumeroForquilla());
+    public void agafarForquillaEsquerra() {
+        forquillaEsquerra.agafar();
     }
 
-    public void agafarForquillaDreta() throws InterruptedException {
-        System.out.println("Filòsof: " + getName() + " agafa la forquilla dreta " + forquillaDreta.getNumeroForquilla());
+    public void agafarForquillaDreta() {
+        forquillaDreta.agafar();
     }
+
+    public void agafarForquilles() {
+        agafarForquillaEsquerra();
+        agafarForquillaDreta();
+        System.out.println(getName() + " té forquilles esq(" + forquillaEsquerra.getNumeroForquilla() + ") dreta(" + forquillaDreta.getNumeroForquilla() + ")");
+    }
+
     public void deixarForquilles() {
-        System.out.println("Filòsof: " + getName() + " ha acabat de menjar");
+        forquillaDreta.deixar();
+        forquillaEsquerra.deixar();
+        System.out.println(getName() + " deixa les forquilles");
     }
 
-    public void menjar() throws InterruptedException {
-        System.out.println("Filòsof: " + getName() + " menja");
-        long tempsMenjar = 1000 + (int)(Math.random() * 1000);
-        Thread.sleep(tempsMenjar);
+    public void menjar() {
+        agafarForquilles();
+        calcularGana();
+        System.out.println(getName() + " menja amb gana " + gana);
+
+        long tempsMenjar = 1000 + (long)(Math.random() * 1000);
+        try {
+            Thread.sleep(tempsMenjar);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(getName() + " ha acabat de menjar");
+        resetGana();
         deixarForquilles();
     }
 
     public void pensar() {
-        long temps = 1000 + (int)(Math.random() * 1000);
+        iniciGana = System.currentTimeMillis();
+        System.out.println(getName() + " pensant");
+
+        long tempsPensar = 1000 + (long)(Math.random() * 1000);
         try {
-            Thread.sleep(temps);
+            Thread.sleep(tempsPensar);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("Filòsof: " + getName() + " pensant");
-        comptadorGana = 0;
+    }
+
+    public long calcularGana() {
+        fiGana = System.currentTimeMillis();
+        gana = (fiGana - iniciGana) / 1000;
+        return gana;
+    }
+
+    public void resetGana() {
+        iniciGana = System.currentTimeMillis();
+        gana = 0;
     }
 
     @Override
     public void run() {
         while (true) {
-            try {
-                pensar();
-                menjar();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            pensar();
+            menjar();
         }
     }
 }
