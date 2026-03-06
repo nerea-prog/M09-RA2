@@ -1,4 +1,4 @@
-public class Fumador implements Runnable {
+public class Fumador extends Thread {
     private Estanc estanc;
     private long id;
     private Tabac tabac;
@@ -13,6 +13,7 @@ public class Fumador implements Runnable {
     }
 
     public void fuma(){
+        System.out.println("Fumador " + id + " fumant");
         if (tabac != null && paper != null && llumi != null) {
             tabac = null;
             llumi = null;
@@ -28,14 +29,17 @@ public class Fumador implements Runnable {
 
     public void compraTabac(){
         tabac = estanc.venTabac();
+        System.out.println("Fumador " + id + " comprant tabac");
     }
 
     public void compraPaper(){
         paper = estanc.venPaper();
+        System.out.println("Fumador " + id + " comprant paper");
     }
 
     public void compraLlumi(){
        llumi = estanc.venLlumi();
+       System.out.println("Fumador " + id + " comprant llumi");
     }
 
     @Override
@@ -46,6 +50,7 @@ public class Fumador implements Runnable {
             compraPaper();
             fuma();
             nFumades++;
+            System.out.println("Fumador " + id + " ha fumat " + nFumades + " vegades");
         }
     }
 }

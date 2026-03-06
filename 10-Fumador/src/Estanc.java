@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Estanc implements Runnable {
+public class Estanc extends Thread {
     private List<Tabac> tabacs;
     private List<Llumi> llumins;
     private List <Paper> papers;
@@ -34,16 +34,19 @@ public class Estanc implements Runnable {
     public synchronized void addTabac(){
         tabacs.add(new Tabac());
         notifyAll();
+        System.out.println("Afegint tabac");
     }
 
     public synchronized void addLlumi(){
         llumins.add(new Llumi());
         notifyAll();
+        System.out.println("Afegint llumí");
     }
 
     public synchronized void addPaper(){
         papers.add(new Paper());
         notifyAll();
+        System.out.println("Afegint paper");
     }
 
     public synchronized Tabac venTabac(){
@@ -87,6 +90,7 @@ public class Estanc implements Runnable {
 
     @Override
     public void run(){
+        System.out.println("Estanc obert");
         while(obert){
             nouSubministrament();
             try{
