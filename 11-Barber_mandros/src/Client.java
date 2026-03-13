@@ -1,13 +1,18 @@
 public class Client extends Thread {
-    private String nom;
     public Client(int id){
-        nom = "Client-" + id;
+        super("Client-" + id);
     }
     public void tallarseCabell(){
-        System.out.println("Tallant cabell a " + nom);
+        try {
+            int temps = 900 + (int)(Math.random() * 100);
+            Thread.sleep(temps);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Tallant cabell a " + getName());
     }
     public String getNom() {
-        return nom;
+        return getName();
     }
     
 }
